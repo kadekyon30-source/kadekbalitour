@@ -1,0 +1,35 @@
+{
+  "username": "admin",
+  "salt": "2dc050e6f09ee480af639423b6e27d16",
+  "passwordHash": "d30f5b9ca7ee4b5ae96b07f84639e8cf4e935ec00cec574e92dcb689785b91588c6829514f1567f2b1699f5b0a646f3ce491204e9f465d0b33bb34fb9cee7dd6",
+  "activeTokens": [
+    {
+      "token": "987f2bee576b00e48dc505cf95cb94abeb93fe54e3ea58cd680bae9ff32bc76c",
+      "expiresAt": 1793247508642
+    },
+    {
+      "token": "b9fcf708055078e3fbc4219ac794d91e8b03a51a050152b1355de0f16a8a5c23",
+      "expiresAt": 1793247567791
+    },
+    {
+      "token": "57370bc23c652d65c8f612f6b99825329648b3ab16871548714e0eefcb6988cd",
+      "expiresAt": 1793247666620
+    },
+    {
+      "token": "ad4d8f27b596f009e79928315b822a624af54b4ed1bf313c5ae3152233c81c3d",
+      "expiresAt": 1793454348066
+    },
+    {
+      "token": "08090f7e391b754e28a87f44137590d9c1e857ce7033e4483cf61a6b309d45d8",
+      "expiresAt": 1793454351767
+    },
+    {
+      "token": "0eef2d91ee4106b421868b5ef1b09b48331107148c175507e99d7e391149bdc7",
+      "expiresAt": 1793454415316
+    },
+    {
+      "token": "37a43c358d0546e0276fd7771ec1614d4c4e624e783d000664ec2d0249619c57",
+      "expiresAt": 1793455514451
+    }
+  ]
+}

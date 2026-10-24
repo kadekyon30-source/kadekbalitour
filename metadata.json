@@ -1,0 +1,6 @@
+{
+  "name": "VERLASKA TRAVEL - Bali Private Tours & Travel Experiences",
+  "description": "Boutique Bali travel experiences, private tours, sightseeing trips, and holiday transportation services in Bali, Indonesia.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
