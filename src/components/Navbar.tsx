@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useApp, NavPage } from '../context/AppContext';
-import { Menu, X, Shield, MessageCircle } from 'lucide-react';
+import { Menu, X, Shield, MessageCircle, CalendarPlus } from 'lucide-react';
 import { buildGeneralInquiryMessage } from '../utils/bookingUtils';
 import { t } from '../utils/translations';
 import { BrandLogo } from './BrandLogo';
 
 export const Navbar: React.FC = () => {
-  const { data, activePage, setActivePage, language, setLanguage, openWhatsApp, auth } = useApp();
+  const { data, activePage, setActivePage, language, setLanguage, openWhatsApp, auth, openBookingModal } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const brandName = 'KADEK BALI';
@@ -104,10 +104,25 @@ export const Navbar: React.FC = () => {
             </span>
           </button>
 
-          {/* Primary Action Button */}
+          {/* Booking & Inquiry Action Button */}
+          <button
+            onClick={() => openBookingModal({ type: 'booking' })}
+            className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#1E6FD9] text-white hover:bg-[#1858ad] transition-all shadow-xs whitespace-nowrap shrink-0 cursor-pointer"
+            title={language === 'id' ? 'Formulir Pesanan Tur & Pertanyaan' : 'Book Tour or Inquire'}
+          >
+            <CalendarPlus className="w-4 h-4" />
+            <span className="hidden sm:inline">
+              {language === 'id' ? 'Pesan / Tanya Tur' : 'Book / Inquire'}
+            </span>
+            <span className="sm:hidden">
+              {language === 'id' ? 'Pesan' : 'Book'}
+            </span>
+          </button>
+
+          {/* Primary WhatsApp Action Button */}
           <button
             onClick={handleWhatsAppClick}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-colors shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
+            className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-colors shadow-sm whitespace-nowrap shrink-0 cursor-pointer"
           >
             <MessageCircle className="w-4 h-4" />
             <span>{t('chatWhatsApp', language)}</span>
@@ -163,6 +178,18 @@ export const Navbar: React.FC = () => {
                 </button>
               </div>
             </div>
+
+            {/* Mobile Booking Button */}
+            <button
+              onClick={() => {
+                openBookingModal({ type: 'booking' });
+                setMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-xs sm:text-sm font-bold bg-[#1E6FD9] text-white hover:bg-[#1858ad] transition-colors shadow-sm"
+            >
+              <CalendarPlus className="w-4 h-4" />
+              <span>{language === 'id' ? 'Formulir Pesanan Tur & Pertanyaan' : 'Tour Booking & Inquiry Form'}</span>
+            </button>
 
             {/* Mobile Admin Link */}
             <button

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { ArrowRight, MessageCircle, MapPin, Sparkles, ShieldCheck } from 'lucide-react';
+import { ArrowRight, MessageCircle, MapPin, Sparkles, ShieldCheck, Calendar } from 'lucide-react';
 import { buildGeneralInquiryMessage } from '../utils/bookingUtils';
 import { t } from '../utils/translations';
 import { BrandLogo } from './BrandLogo';
 
 export const Hero: React.FC = () => {
-  const { data, setActivePage, openWhatsApp, language } = useApp();
+  const { data, setActivePage, openWhatsApp, language, openBookingModal } = useApp();
   const settings = data.settings || {};
   const brandName = 'KADEK BALI';
 
@@ -68,8 +68,16 @@ export const Hero: React.FC = () => {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-10 w-full sm:w-auto">
               <button
+                onClick={() => openBookingModal({ type: 'booking' })}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold bg-[#1E6FD9] text-white hover:bg-[#1858ad] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer text-center"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>{language === 'id' ? 'Pesan Tur Sekarang' : 'Book Tour Now'}</span>
+              </button>
+
+              <button
                 onClick={() => setActivePage('tours')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer text-center"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer text-center"
               >
                 <span>{t('exploreToursBtn', language)}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -77,10 +85,10 @@ export const Hero: React.FC = () => {
 
               <button
                 onClick={handleWhatsApp}
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold bg-white text-[#252923] hover:bg-[#EDE5D8]/60 transition-all border border-[#1E6FD9]/30 hover:border-[#1E6FD9] shadow-xs cursor-pointer text-center"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full text-sm font-semibold bg-white text-[#252923] hover:bg-[#EDE5D8]/60 transition-all border border-[#15803D]/30 hover:border-[#15803D] shadow-xs cursor-pointer text-center"
               >
                 <MessageCircle className="w-4 h-4 text-[#15803D] shrink-0" />
-                <span className="truncate">{t('chatWhatsAppBtn', language)} ({data.contact?.whatsappNumber || '+6285739256845'})</span>
+                <span className="truncate">{t('chatWhatsAppBtn', language)}</span>
               </button>
             </div>
 

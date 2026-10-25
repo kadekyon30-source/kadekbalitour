@@ -1420,8 +1420,11 @@ export const AdminDashboard: React.FC = () => {
                       </a>
                     )}
                   </div>
-                  <span className="text-[11px] text-[#252923]/60 mt-1.5 block">
-                    Alamat email ini ditampilkan di bagian kontak dan footer publik untuk reservasi wisatawan internasional.
+                  <span className="text-[11px] text-[#15803D] font-medium mt-1.5 flex items-center gap-1.5">
+                    <Shield className="w-3.5 h-3.5" />
+                    <span>
+                      Notifikasi Otomatis: Setiap kali ada tamu yang melakukan pemesanan (booking) atau mengirim pertanyaan, notifikasi instan akan langsung dikirimkan ke alamat email ini!
+                    </span>
                   </span>
                 </div>
 

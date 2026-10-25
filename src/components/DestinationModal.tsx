@@ -1,7 +1,7 @@
 import React from 'react';
 import { Destination } from '../types';
 import { useApp } from '../context/AppContext';
-import { X, MapPin, Check, MessageCircle } from 'lucide-react';
+import { X, MapPin, Check, MessageCircle, Calendar } from 'lucide-react';
 import { buildDestinationInquiryMessage } from '../utils/bookingUtils';
 import { t, getLocalizedDestination } from '../utils/translations';
 
@@ -11,7 +11,7 @@ interface DestinationModalProps {
 }
 
 export const DestinationModal: React.FC<DestinationModalProps> = ({ destination, onClose }) => {
-  const { data, openWhatsApp, language } = useApp();
+  const { data, openWhatsApp, language, openBookingModal } = useApp();
 
   if (!destination) return null;
 
@@ -92,7 +92,7 @@ export const DestinationModal: React.FC<DestinationModalProps> = ({ destination,
           )}
 
           {/* Action buttons */}
-          <div className="pt-4 border-t border-[#EDE5D8] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="pt-4 border-t border-[#EDE5D8] flex flex-col sm:flex-row items-center justify-between gap-3">
             <button
               onClick={onClose}
               className="w-full sm:w-auto px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium border border-[#EDE5D8] text-[#252923] hover:bg-[#EDE5D8]/50 transition-colors cursor-pointer"
@@ -100,17 +100,28 @@ export const DestinationModal: React.FC<DestinationModalProps> = ({ destination,
               {t('closeBtn', language)}
             </button>
 
-            <button
-              onClick={handleInquire}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-[#526B50] text-[#FAF9F6] hover:bg-[#435741] transition-colors shadow-sm cursor-pointer"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>
-                {language === 'id'
-                  ? `Tanya Tur ke ${localized.name} via WhatsApp`
-                  : `Inquire ${localized.name} on WhatsApp`}
-              </span>
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
+              <button
+                onClick={() => {
+                  onClose();
+                  openBookingModal({ destination, type: 'booking' });
+                }}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-[#1E6FD9] text-white hover:bg-[#1858ad] transition-all shadow-md cursor-pointer"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>
+                  {language === 'id' ? `Pesan Tur ke ${localized.name}` : `Book Tour to ${localized.name}`}
+                </span>
+              </button>
+
+              <button
+                onClick={handleInquire}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-colors shadow-sm cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>WhatsApp</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

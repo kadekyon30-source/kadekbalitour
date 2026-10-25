@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ToastContainer } from './components/ToastContainer';
+import { BookingInquiryModal } from './components/BookingInquiryModal';
 import { Hero } from './components/Hero';
 import { DestinationsSection } from './components/DestinationsSection';
 import { ToursSection } from './components/ToursSection';
@@ -83,6 +84,9 @@ const MainApp: React.FC = () => {
 
       {/* Floating WhatsApp Action */}
       <FloatingWhatsApp />
+
+      {/* Global Booking & Inquiry Modal */}
+      <BookingInquiryModal />
 
       {/* Notifications Toast */}
       <ToastContainer />

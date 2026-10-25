@@ -473,7 +473,7 @@ export const INITIAL_DATA: AppData = {
   ],
   contact: {
     whatsappNumber: '+6285739256845',
-    email: 'info@kadekbali.com',
+    email: 'kadek.yon30@guru.sd.belajar.id',
     instagram: '@kadekbalitour',
     facebook: 'Kadek Bali Tour',
     tiktok: '@kadekbalitour',

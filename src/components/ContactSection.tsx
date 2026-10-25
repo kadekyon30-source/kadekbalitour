@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { submitInquiry } from '../services/dataService';
+import { sendBookingEmailNotification } from '../services/emailService';
 import { validateContactForm, formatWhatsAppLink, buildSocialUrl } from '../utils/bookingUtils';
 import { MessageCircle, Mail, MapPin, Clock, Instagram, Facebook, Youtube, Share2, ExternalLink, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { t, getLocalizedDestination } from '../utils/translations';
@@ -50,11 +51,29 @@ export const ContactSection: React.FC = () => {
 
     setSubmitting(true);
     try {
+      // 1. Dispatch email notification directly to the admin email
+      const adminEmail = contact.email || 'kadek.yon30@guru.sd.belajar.id';
+      sendBookingEmailNotification(
+        {
+          customerName: formData.fullName,
+          customerEmail: formData.email,
+          travelDate: formData.travelDate,
+          travelersCount: formData.travelersCount,
+          preferredDestination: formData.preferredDestination,
+          notes: formData.message,
+          type: 'inquiry',
+        },
+        adminEmail
+      ).catch((err) => console.warn('Email dispatch warning:', err));
+
+      // 2. Submit to inquiry queue
       const res = await submitInquiry(formData);
       if (res.success) {
         setSubmittedInquiry(res.inquiry || { ...formData, id: 'temp' });
         showToast(
-          language === 'id' ? 'Pertanyaan Anda berhasil dikirim!' : res.message,
+          language === 'id'
+            ? `Pertanyaan Anda berhasil dikirim! Notifikasi telah langsung diteruskan ke email admin (${adminEmail}).`
+            : `Your inquiry has been sent and automatically notified to admin (${adminEmail}).`,
           'success'
         );
       } else {

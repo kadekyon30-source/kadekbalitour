@@ -30,6 +30,18 @@ interface AppContextType {
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
   dismissToast: (id: string) => void;
   openWhatsApp: (message: string) => void;
+  bookingModal: {
+    isOpen: boolean;
+    tour?: TourPackage | null;
+    destination?: Destination | null;
+    type?: 'booking' | 'inquiry';
+  };
+  openBookingModal: (options?: {
+    tour?: TourPackage | null;
+    destination?: Destination | null;
+    type?: 'booking' | 'inquiry';
+  }) => void;
+  closeBookingModal: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -42,6 +54,34 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [selectedTour, setSelectedTour] = useState<TourPackage | null>(null);
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [bookingModal, setBookingModal] = useState<{
+    isOpen: boolean;
+    tour?: TourPackage | null;
+    destination?: Destination | null;
+    type?: 'booking' | 'inquiry';
+  }>({
+    isOpen: false,
+    tour: null,
+    destination: null,
+    type: 'booking',
+  });
+
+  const openBookingModal = (options?: {
+    tour?: TourPackage | null;
+    destination?: Destination | null;
+    type?: 'booking' | 'inquiry';
+  }) => {
+    setBookingModal({
+      isOpen: true,
+      tour: options?.tour || null,
+      destination: options?.destination || null,
+      type: options?.type || 'booking',
+    });
+  };
+
+  const closeBookingModal = () => {
+    setBookingModal((prev) => ({ ...prev, isOpen: false }));
+  };
 
   const [auth, setAuth] = useState<AuthState>(() => {
     const stored = getStoredAuth();
@@ -165,6 +205,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         showToast,
         dismissToast,
         openWhatsApp,
+        bookingModal,
+        openBookingModal,
+        closeBookingModal,
       }}
     >
       {children}

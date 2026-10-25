@@ -11,7 +11,7 @@ interface TourModalProps {
 }
 
 export const TourModal: React.FC<TourModalProps> = ({ tour, onClose }) => {
-  const { data, openWhatsApp, language } = useApp();
+  const { data, openWhatsApp, language, openBookingModal } = useApp();
 
   if (!tour) return null;
 
@@ -208,13 +208,26 @@ export const TourModal: React.FC<TourModalProps> = ({ tour, onClose }) => {
               {t('backBtn', language)}
             </button>
 
-            <button
-              onClick={handleBookWhatsApp}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-[#526B50] text-[#FAF9F6] hover:bg-[#435741] transition-all shadow-md cursor-pointer"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>{t('bookWhatsAppBtn', language)}</span>
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
+              <button
+                onClick={() => {
+                  onClose();
+                  openBookingModal({ tour, type: 'booking' });
+                }}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-[#1E6FD9] text-white hover:bg-[#1858ad] transition-all shadow-md cursor-pointer"
+              >
+                <Calendar className="w-4 h-4" />
+                <span>{language === 'id' ? 'Formulir Pesanan Tur' : 'Book Tour Form'}</span>
+              </button>
+
+              <button
+                onClick={handleBookWhatsApp}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-all shadow-md cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>{t('bookWhatsAppBtn', language)}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Clock, MapPin, MessageCircle, ArrowRight } from 'lucide-react';
+import { Clock, MapPin, MessageCircle, ArrowRight, Calendar } from 'lucide-react';
 import { formatPrice, buildTourInquiryMessage } from '../utils/bookingUtils';
 import { TourModal } from './TourModal';
 import { TourPackage } from '../types';
@@ -11,7 +11,7 @@ interface ToursSectionProps {
 }
 
 export const ToursSection: React.FC<ToursSectionProps> = ({ isHomeView = false }) => {
-  const { data, selectedTour, setSelectedTour, setActivePage, openWhatsApp, language } = useApp();
+  const { data, selectedTour, setSelectedTour, setActivePage, openWhatsApp, language, openBookingModal } = useApp();
   const [filter, setFilter] = useState<'all' | 'featured'>('all');
 
   const brandName = data.settings?.siteName || 'VERLASKA TRAVEL';
@@ -159,7 +159,7 @@ export const ToursSection: React.FC<ToursSectionProps> = ({ isHomeView = false }
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="pt-4 border-t border-[#EDE5D8] flex items-center justify-between gap-3">
+                  <div className="pt-4 border-t border-[#EDE5D8] flex flex-wrap items-center justify-between gap-2">
                     <button
                       onClick={() => setSelectedTour(tour)}
                       className="text-xs font-semibold text-[#526B50] group-hover:text-[#435741] flex items-center gap-1 cursor-pointer"
@@ -168,13 +168,28 @@ export const ToursSection: React.FC<ToursSectionProps> = ({ isHomeView = false }
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
 
-                    <button
-                      onClick={(e) => handleQuickWhatsApp(e, rawTour)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold bg-[#526B50] text-[#FAF9F6] hover:bg-[#435741] transition-colors shadow-sm cursor-pointer"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5" />
-                      <span>{t('bookWhatsAppBtn', language)}</span>
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openBookingModal({ tour: rawTour, type: 'booking' });
+                        }}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#1E6FD9] text-white hover:bg-[#1858ad] transition-colors shadow-xs cursor-pointer"
+                        title={language === 'id' ? 'Pesan Tur Ini' : 'Book This Tour'}
+                      >
+                        <Calendar className="w-3 h-3" />
+                        <span>{language === 'id' ? 'Pesan' : 'Book'}</span>
+                      </button>
+
+                      <button
+                        onClick={(e) => handleQuickWhatsApp(e, rawTour)}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-[#15803D] text-[#FAF9F6] hover:bg-[#166534] transition-colors shadow-xs cursor-pointer"
+                        title="Chat WhatsApp"
+                      >
+                        <MessageCircle className="w-3 h-3" />
+                        <span>WA</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </article>
